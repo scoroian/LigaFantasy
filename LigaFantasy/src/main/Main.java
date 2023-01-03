@@ -35,9 +35,9 @@ public class Main {
 	public static int menu() {
 		System.out.println("MENU LIGA FANTASY");
 		System.out.println("1. Insertar equipo");
-		System.out.println("2. Añadir puntos a equipo");
-		System.out.println("3. Añadir goles a favor a equipo");
-		System.out.println("4. Añadir goles en contra a equipo");
+		System.out.println("2. AÃ±adir puntos a equipo");
+		System.out.println("3. AÃ±adir goles a favor a equipo");
+		System.out.println("4. AÃ±adir goles en contra a equipo");
 		System.out.println("5. Ver puntuacion");
 		System.out.println("6. Salir");
 		return scInt.nextInt();
