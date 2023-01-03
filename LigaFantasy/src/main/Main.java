@@ -2,6 +2,8 @@ package main;
 
 import java.util.Scanner;
 
+import bean.Team;
+
 public class Main {
 
 	static Scanner scInt = new Scanner(System.in);
@@ -14,8 +16,9 @@ public class Main {
 			opcionMenu = menu();
 			switch (opcionMenu) {
 			case 1:
+				Team team = new Team();
 				break;
-			case 2:
+			case 7:
 				break;
 			case 3:
 				break;
