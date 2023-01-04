@@ -2,13 +2,11 @@ package main;
 
 import java.util.Scanner;
 
+import bean.League;
 import bean.Team;
 import lists.HashMap;
 
 public class Main {
-
-	static Scanner scInt = new Scanner(System.in);
-	static Scanner scString = new Scanner(System.in);
 
 	static HashMap teams = new HashMap();
 	static int totalTeams = 0;
@@ -16,6 +14,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		int opcionMenu;
+		boolean finish = false;
 		do {
 			opcionMenu = menuSimulacion();
 			switch (opcionMenu) {
@@ -23,6 +22,8 @@ public class Main {
 				addTeam();
 				break;
 			case 2:
+				League league = new League();
+				league.simulate(teams);
 				break;
 //			case 3:
 //				break;
@@ -31,12 +32,9 @@ public class Main {
 //			case 5:
 //				break;
 //			case 6:
-//				System.exit(0);
-//				break;
-			default:
-				throw new IllegalArgumentException("Opción no valida: " + opcionMenu);
+//				finish = true;
 			}
-		} while (opcionMenu < 1 || opcionMenu > 2);
+		} while (!finish);
 	}
 
 //	public static int menu() {
@@ -51,29 +49,40 @@ public class Main {
 //	}
 
 	public static int menuSimulacion() {
-		System.out.println("MENU LIGA SIMULACION");
-		System.out.println("1. Leer archivo");
-		System.out.println("2. Siular");
-		return scInt.nextInt();
+		try {
+			Scanner scInt = new Scanner(System.in);
+			System.out.println("MENU LIGA SIMULACION");
+			System.out.println("1. Leer archivo");
+			System.out.println("2. Siular");
+			int option = scInt.nextInt();
+			return option;
+		} catch (Exception e) {
+			System.err.println("Opcion no valida");
+		}
+		return 0;
+
 	}
 
 	public static void addTeam() {
-		if (totalTeams >= 21) {
-			System.out.println("");
+		// Control the maximum number of teams
+		if (totalTeams >= 2) {
+			System.err.println("Ya has llegado al maximo número de equipos");
+			return;
 		}
+		Scanner scString = new Scanner(System.in);
 		Team team = new Team();
-		System.out.println("Insertar nombre del equipo:");
 		String name = null;
-
-		while (teams.buscar(name) != null) {
+		do {
 			if (name != null) {
-				System.out.println("El equipo ya existe");
+				System.err.println("El equipo ya existe");
 			}
+			System.out.println("Insertar nombre del equipo:");
 			name = scString.next();
-		}
-		
+		} while (teams.buscar(name) != null);
+
 		team.setName(name);
 		teams.insertar(team);
+		totalTeams++;
 	}
 
 }
