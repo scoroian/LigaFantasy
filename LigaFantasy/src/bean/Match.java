@@ -12,18 +12,12 @@ public class Match {
 	private int awayGoals;
 
 	/**
-	 * Constructor with all parameters
-	 * 
 	 * @param homeTeam
 	 * @param awayTeam
-	 * @param homeGoals
-	 * @param awayGoals
 	 */
-	public Match(String homeTeam, String awayTeam, int homeGoals, int awayGoals) {
+	public Match(String homeTeam, String awayTeam) {
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
-		this.homeGoals = homeGoals;
-		this.awayGoals = awayGoals;
 	}
 
 //----------getters and setters-------------------------------------------------
@@ -89,7 +83,5 @@ public class Match {
 		return "Match [homeTeam=" + homeTeam + ", awayTeam=" + awayTeam + ", homeGoals=" + homeGoals + ", awayGoals="
 				+ awayGoals + "]";
 	}
-	
-	
 
 }
