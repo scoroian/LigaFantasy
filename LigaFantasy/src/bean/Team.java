@@ -6,22 +6,16 @@ public class Team {
 	private int points;
 	private int goalF;// goles a favor
 	private int goalC;// goles en contra
-	
-	
-	/**
-	 * 
-	 */
-	public Team() {
-		goalF = 0;
-		goalC = 0;
-		points = 0;
-	}
+
+	public Team() {}
+
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
+
 	/**
 	 * 
 	 * @param name
@@ -29,42 +23,52 @@ public class Team {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	/**
 	 * @return the points
 	 */
 	public int getPoints() {
 		return points;
 	}
+
 	/**
-	 * @param points the points to set
+	 * @param points the points to add
 	 */
-	public void setPoints(int points) {
-		this.points = points;
+	public void addPoints(int points) {
+		this.points += points;
 	}
+
 	/**
 	 * @return the goalF
 	 */
 	public int getGoalF() {
 		return goalF;
 	}
+
 	/**
-	 * @param goalF the goalF to set
+	 * @param goalF the goalF to add
 	 */
-	public void setGoalF(int goalF) {
-		this.goalF = goalF;
+	public void addGoalF(int goalF) {
+		this.goalF += goalF;
 	}
+
 	/**
 	 * @return the goalC
 	 */
 	public int getGoalC() {
 		return goalC;
 	}
+
 	/**
-	 * @param goalC the goalC to set
+	 * @param goalC the goalC to add
 	 */
-	public void setGoalC(int goalC) {
-		this.goalC = goalC;
+	public void addGoalC(int goalC) {
+		this.goalC += goalC;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Team [name=" + name + ", points=" + points + ", goalF=" + goalF + ", goalC=" + goalC + "]";
+	}
+
 }

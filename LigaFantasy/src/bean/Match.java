@@ -89,7 +89,5 @@ public class Match {
 		return "Match [homeTeam=" + homeTeam + ", awayTeam=" + awayTeam + ", homeGoals=" + homeGoals + ", awayGoals="
 				+ awayGoals + "]";
 	}
-	
-	
 
 }
