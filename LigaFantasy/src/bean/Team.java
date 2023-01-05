@@ -147,5 +147,19 @@ public class Team {
 		// TODO if el equipo existe donde sea devuelve true sino false.
 		return false;
 	}
+	
+	public boolean mayorQue(Team data) {
+		if(points > data.points) {
+			return true;
+		} else if (points == data.points && (goalsScored - goalsAgainst) > (data.goalsScored - data.goalsAgainst)) {
+			return true;
+		} else if (points == data.points && 
+				(goalsScored - goalsAgainst) == (data.goalsScored - data.goalsAgainst) && 
+				goalsScored > data.goalsScored) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }

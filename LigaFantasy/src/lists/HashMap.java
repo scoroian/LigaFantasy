@@ -1,6 +1,7 @@
 package lists;
 
 import bean.Team;
+import algoritmes.*;
 
 public class HashMap {
 	// 21 teams / 0.8 = 26.25, the next prime number is 27
@@ -85,5 +86,28 @@ public class HashMap {
 //			tabla[posicion].esAlta=false;
 //		
 //	}
+	
+	public static void verPuntuaciones(HashMap param) {
+		param.tabla = SortAlgoritmes.shellSort(param.tabla);
+		System.out.println("EQUIPOS			PTS		DG");
+		int tab = 0;
+		for (int i = 0; param.tabla[i] != null; i++) {
+			tab = param.numElementos/5;
+			switch(tab) {
+			case 0: 
+				System.out.println(param.tabla[i]+ "			" + 20 + "		" + 3);
+				break;
+			case 1:
+				System.out.println(param.tabla[i]+ "			" + 20 + "		" + 3);
+				break;
+			case 2:
+				System.out.println(param.tabla[i]+ "		" + 20 + "		" + 3);
+				break;
+			case 3:
+				System.out.println(param.tabla[i]+ "	" + 20 + "		" + 3);
+				break;
+			}
+		}
+	}
 
 }

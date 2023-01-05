@@ -5,6 +5,7 @@ import java.util.Scanner;
 import bean.League;
 import bean.Team;
 import lists.HashMap;
+import algoritmes.*;
 
 public class Main {
 
