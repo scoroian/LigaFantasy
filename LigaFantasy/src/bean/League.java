@@ -12,5 +12,6 @@ public class League {
 	public void simulate(HashMap teams) {
 		// TODO crear aqui la simulacion y todos los metodos de comprobaciones
 		// para que no se repitan los partidos
+		System.out.println("prueeba");
 	}
 }
