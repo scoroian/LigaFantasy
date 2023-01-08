@@ -1,11 +1,11 @@
 package lists;
 
+import algoritmes.SortAlgoritmes;
 import bean.Team;
-import algoritmes.*;
 
 public class HashMap {
 	// 21 teams / 0.8 = 26.25, the next prime number is 27
-	static final int TAMTABLA = 27;
+	public static final int TAMTABLA = 27;
 	private int numElementos;
 	private double factorCarga;
 	private Team[] tabla;
@@ -19,6 +19,11 @@ public class HashMap {
 		// se inicializan los atributos a 0
 		numElementos = 0;
 		factorCarga = 0;
+	}
+	
+	public Team getTeamForPosition(int position) {
+		if (position < 0 || position > 27) return null;
+		return tabla[position];
 	}
 
 	// devuelve la posición o índice de la tabla libre para insertar

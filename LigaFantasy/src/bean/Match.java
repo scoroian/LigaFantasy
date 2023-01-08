@@ -6,8 +6,8 @@ package bean;
  */
 public class Match {
 
-	private String homeTeam;
-	private String awayTeam;
+	private Team homeTeam;
+	private Team awayTeam;
 	private int homeGoals;
 	private int awayGoals;
 
@@ -15,7 +15,7 @@ public class Match {
 	 * @param homeTeam
 	 * @param awayTeam
 	 */
-	public Match(String homeTeam, String awayTeam) {
+	public Match(Team homeTeam, Team awayTeam) {
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
 	}
@@ -25,28 +25,28 @@ public class Match {
 	/**
 	 * @return the homeTeam
 	 */
-	public String getHomeTeam() {
+	public Team getHomeTeam() {
 		return homeTeam;
 	}
 
 	/**
 	 * @param homeTeam the homeTeam to set
 	 */
-	public void setHomeTeam(String homeTeam) {
+	public void setHomeTeam(Team homeTeam) {
 		this.homeTeam = homeTeam;
 	}
 
 	/**
 	 * @return the awayTeam
 	 */
-	public String getAwayTeam() {
+	public Team getAwayTeam() {
 		return awayTeam;
 	}
 
 	/**
 	 * @param awayTeam the awayTeam to set
 	 */
-	public void setAwayTeam(String awayTeam) {
+	public void setAwayTeam(Team awayTeam) {
 		this.awayTeam = awayTeam;
 	}
 

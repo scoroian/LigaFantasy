@@ -5,7 +5,6 @@ import java.util.Scanner;
 import bean.League;
 import bean.Team;
 import lists.HashMap;
-import algoritmes.*;
 
 public class Main {
 
@@ -25,6 +24,7 @@ public class Main {
 			case 2:
 				League league = new League();
 				league.simulate(teams);
+				finish = true;
 				break;
 //			case 3:
 //				break;
@@ -53,8 +53,8 @@ public class Main {
 		try {
 			Scanner scInt = new Scanner(System.in);
 			System.out.println("MENU LIGA SIMULACION");
-			System.out.println("1. Leer archivo");
-			System.out.println("2. Siular");
+			System.out.println("1. Insertar equipo");
+			System.out.println("2. Simular");
 			int option = scInt.nextInt();
 			return option;
 		} catch (Exception e) {
@@ -66,7 +66,7 @@ public class Main {
 
 	public static void addTeam() {
 		// Control the maximum number of teams
-		if (totalTeams >= 2) {
+		if (totalTeams >= 21) {
 			System.err.println("Ya has llegado al maximo número de equipos");
 			return;
 		}
