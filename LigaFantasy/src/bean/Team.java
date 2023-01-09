@@ -1,4 +1,6 @@
 package bean;
+import java.util.Scanner;
+
 
 public class Team {
 
@@ -126,6 +128,13 @@ public class Team {
 		} else {
 			return false;
 		}
+	}
+	
+	public void insertTeam() {
+	try (Scanner teclado = new Scanner(System.in)) {
+		System.out.println("Introduzca el nombre del equipo:");
+		name = teclado.nextLine() ;
+	}
 	}
 
 }
