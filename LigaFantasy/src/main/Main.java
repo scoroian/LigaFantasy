@@ -50,8 +50,7 @@ public class Main {
 //	}
 
 	public static int menuSimulacion() {
-		try {
-			Scanner scInt = new Scanner(System.in);
+		try (Scanner scInt = new Scanner(System.in)) {
 			System.out.println("MENU LIGA SIMULACION");
 			System.out.println("1. Insertar equipo");
 			System.out.println("2. Simular");
@@ -70,19 +69,20 @@ public class Main {
 			System.err.println("Ya has llegado al maximo número de equipos");
 			return;
 		}
-		Scanner scString = new Scanner(System.in);
-		Team team = new Team();
-		String name = null;
-		do {
-			if (name != null) {
-				System.err.println("El equipo ya existe");
-			}
-			System.out.println("Insertar nombre del equipo:");
-			name = scString.next();
-		} while (teams.buscar(name) != null);
+		try (Scanner scString = new Scanner(System.in)) {
+			Team team = new Team();
+			String name = null;
+			do {
+				if (name != null) {
+					System.err.println("El equipo ya existe");
+				}
+				System.out.println("Insertar nombre del equipo:");
+				name = scString.next();
+			} while (teams.buscar(name) != null);
 
-		team.setName(name);
-		teams.insertar(team);
+			team.setName(name);
+			teams.insertar(team);
+		}
 		totalTeams++;
 	}
 

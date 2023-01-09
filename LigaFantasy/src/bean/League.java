@@ -34,11 +34,11 @@ public class League {
 				actualMatch.setHomeGoals(team1Goals);
 				actualMatch.setAwayGoals(team2Goals);
 				// add team goals
-				team1.setGoalsScored(team1.getGoalsScored() + team1Goals);
-				team2.setGoalsScored(team2.getGoalsScored() + team2Goals);
+				team1.addGoalsScoredToTeam(team1Goals);
+				team2.addGoalsScoredToTeam(team2Goals);
 				// add goals against
-				team1.setGoalsAgainst(team1.getGoalsAgainst() + team2Goals);
-				team2.setGoalsAgainst(team2.getGoalsAgainst() + team1Goals);
+				team1.addGoalsAgainstToTeam(team2Goals);
+				team2.addGoalsAgainstToTeam(team1Goals);
 				
 				if (team1Goals > team2Goals) team1.addPoints(winnerPoints);
 				if (team2Goals > team1Goals) team2.addPoints(winnerPoints);
