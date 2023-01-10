@@ -26,6 +26,9 @@ public class Main {
 				league.simulate(teams);
 				finish = true;
 				break;
+			case 3:
+				System.exit(0);
+				break;
 			}
 		} while (!finish);
 	}
@@ -37,6 +40,7 @@ public class Main {
 			System.out.println("MENU LIGA SIMULACION");
 			System.out.println("1. Insertar equipo");
 			System.out.println("2. Simular");
+			System.out.println("3. Salir");
 			int option = scInt.nextInt();
 			return option;
 		} catch (Exception e) {
