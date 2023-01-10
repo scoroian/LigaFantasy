@@ -1,6 +1,4 @@
 package bean;
-import java.util.Scanner;
-
 
 public class Team {
 

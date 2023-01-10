@@ -17,12 +17,12 @@ public class League {
 	public void simulate(HashMap teams) {
 		// get fisrt team
 		team1For:
-		for (int i = 0; i < teams.TAMTABLA; i++) {
+		for (int i = 0; i < HashMap.TAMTABLA; i++) {
 			Team team1 = teams.getTeamForPosition(i);
 			if (team1 == null) continue team1For;
 			// get opponent
 			team2For:
-			for (int j = 0; j < teams.TAMTABLA; j++) {
+			for (int j = 0; j < HashMap.TAMTABLA; j++) {
 				if (i == j) continue team2For;
 				Team team2 = teams.getTeamForPosition(j);
 				Match actualMatch = new Match(team1, team2);
