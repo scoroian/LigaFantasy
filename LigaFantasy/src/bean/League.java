@@ -11,58 +11,66 @@ public class League {
 	final static int winnerPoints = 3;
 	final static int drawPoints = 1;
 	
-	List<Match> matches = new ArrayList<Match>();
+	List<List<Match>> round = new ArrayList<List<Match>>();
 	Random random = new Random();
 
-	public void simulate(HashMap teams) {
-		// get fisrt team
-		team1For:
-		for (int i = 0; i < HashMap.TAMTABLA; i++) {
-			Team team1 = teams.getTeamForPosition(i);
-			if (team1 == null) continue team1For;
-			// get opponent
-			team2For:
-			for (int j = 0; j < HashMap.TAMTABLA; j++) {
-				if (i == j) continue team2For;
-				Team team2 = teams.getTeamForPosition(j);
-				Match actualMatch = new Match(team1, team2);
-				if (team2 == null || checkMatch(actualMatch)) continue team2For;
-				// calculate the teams goals
-				int team1Goals = random.nextInt(8);
-				int team2Goals = random.nextInt(8);
-				// set teams goals in the match
-				actualMatch.setHomeGoals(team1Goals);
-				actualMatch.setAwayGoals(team2Goals);
-				// add team goals
-				team1.addGoalsScoredToTeam(team1Goals);
-				team2.addGoalsScoredToTeam(team2Goals);
-				// add goals against
-				team1.addGoalsAgainstToTeam(team2Goals);
-				team2.addGoalsAgainstToTeam(team1Goals);
+	public void simulate(HashMap teamsMap) {
+		List<Match> matches = new ArrayList<Match>();
+		List<Team> teams = generateTeams(teamsMap);
+		int totalRounds = teams.size() - 1;
+		int i = 0;
+		do {
+			Team team1 = null;
+			Team team2 = null;
+//			if (i == teams.size()-1) {
+//				team1 = teams.get(i);
+//				
+//			}
+			boolean correct = false;
+			do {
 				
-				if (team1Goals > team2Goals) team1.addPoints(winnerPoints);
-				if (team2Goals > team1Goals) team2.addPoints(winnerPoints);
-				if (team1Goals == team2Goals) {
-					team1.addPoints(drawPoints);
-					team2.addPoints(drawPoints);
-				}
-				
-				matches.add(actualMatch);
-			}
-		}
-		showSimulate();
+				int r = random.nextInt((teams.size()) + 1);
+				team1 = teams.get(0);
+				team2 = teams.get(r);
+				if (!team1.getPlayed().contains(team2)) correct = true;
+			} while (!correct);
+			
+			Match match = new Match(team1, team2);
+			team1.setPlayed(team2);
+			team2.setPlayed(team1);
+			
+			teams.remove(team1);
+			teams.remove(team2);
+			
+			matches.add(match);
+			i++;
+		} while (i != totalRounds);
+		
+		round.add(matches);
+		matches = new ArrayList<>();
 	}
 	
-	public void showSimulate() {
-		String homeTeam = "";
-		for (Match match : matches) {
-			if (!homeTeam.equals(match.getHomeTeam().getName())) {
-				homeTeam = match.getHomeTeam().getName();
-				System.out.println("###### Jornadas de " + homeTeam + "(" + match.getHomeTeam().getPoints() + " puntos) ######");
-			}
-			System.out.println(homeTeam + " " + match.getHomeGoals() + " - " + match.getAwayGoals() + " " + match.getAwayTeam().getName());
+	public List<Team> generateTeams(HashMap teamsMap) {
+		List<Team> teamsArray = new ArrayList<Team>();
+		for (int i = 0; i < HashMap.TAMTABLA; i++) {
+			Team team = teamsMap.getTeamForPosition(i);
+			if (team == null) continue;
+			teamsArray.add(team);
 		}
+		return teamsArray;
 	}
+	
+//	public void showSimulate() {
+//		String homeTeam = "";
+//		int i = 1;
+//		for (Match match : matches) {
+//			if (!homeTeam.equals(match.getHomeTeam().getName())) {
+//				homeTeam = match.getHomeTeam().getName();
+//				System.out.println("###### Jornadas " + i++ + " ######");
+//			}
+//			System.out.println(homeTeam + " " + match.getHomeGoals() + " - " + match.getAwayGoals() + " " + match.getAwayTeam().getName());
+//		}
+//	}
 	
 	/**
 	 * Method for check to see if team 1 and team 2 have already played 
@@ -70,7 +78,7 @@ public class League {
 	 * @param team2
 	 * @return
 	 */
-	private boolean checkMatch(Match actualMatch) {
-		return matches.contains(actualMatch);
-	}
+//	private boolean checkMatch(Match actualMatch) {
+//		return matches.contains(actualMatch);
+//	}
 }

@@ -23,6 +23,7 @@ public class Main {
 				break;
 			case 2:
 				League league = new League();
+//				addTeamsToTeam();
 				league.simulate(teams);
 				finish = true;
 				break;
@@ -50,7 +51,8 @@ public class Main {
 //	}
 
 	public static int menuSimulacion() {
-		try (Scanner scInt = new Scanner(System.in)) {
+		try {
+			Scanner scInt = new Scanner(System.in);
 			System.out.println("MENU LIGA SIMULACION");
 			System.out.println("1. Insertar equipo");
 			System.out.println("2. Simular");
@@ -69,7 +71,8 @@ public class Main {
 			System.err.println("Ya has llegado al maximo número de equipos");
 			return;
 		}
-		try (Scanner scString = new Scanner(System.in)) {
+//		try () {
+		Scanner scString = new Scanner(System.in);
 			Team team = new Team();
 			String name = null;
 			do {
@@ -82,8 +85,20 @@ public class Main {
 
 			team.setName(name);
 			teams.insertar(team);
-		}
+//		}
 		totalTeams++;
 	}
 
+	public static void addTeamsToTeam() {
+		for (int i = 0; i < HashMap.TAMTABLA; i++) {
+			Team team = teams.getTeamForPosition(i);
+			if (team == null) continue;
+			for (int j = 0; j < HashMap.TAMTABLA; j++) {
+				Team teamToAdd = teams.getTeamForPosition(j);
+				if (i == j || teamToAdd == null) continue;
+				team.setPlayed(teamToAdd);
+			}
+		}
+	}
+	
 }

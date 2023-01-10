@@ -1,11 +1,14 @@
 package bean;
 
+import java.util.ArrayList;
+
 public class Team {
 
 	private String name;
 	private int points;
 	private int goalsScored; // goles a favor
 	private int goalsAgainst; // goles en contra
+	private ArrayList<Team> played = new ArrayList<Team>();
 
 	/**
 	 * Empty constructor
@@ -115,6 +118,14 @@ public class Team {
 		this.setGoalsAgainst(this.getGoalsAgainst() + numGoals);
 	}
 
+	public ArrayList<Team> getPlayed() {
+		return played;
+	}
+
+	public void setPlayed(Team team) {
+		played.add(team);
+	}
+
 	public boolean mayorQue(Team data) {
 		if (points > data.points) {
 			return true;
@@ -127,5 +138,6 @@ public class Team {
 			return false;
 		}
 	}
+	
 	
 }
