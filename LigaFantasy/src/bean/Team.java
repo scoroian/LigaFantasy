@@ -85,6 +85,20 @@ public class Team {
 	}
 
 	/**
+	 * @return the played
+	 */
+	public ArrayList<Team> getPlayed() {
+		return played;
+	}
+
+	/**
+	 * @param team the played to set
+	 */
+	public void setPlayed(Team team) {
+		this.played.add(team);
+	}
+
+	/**
 	 * Adds the goals scored to the team.
 	 * 
 	 * @param numGoals number of goals scored
@@ -118,15 +132,19 @@ public class Team {
 		this.setGoalsAgainst(this.getGoalsAgainst() + numGoals);
 	}
 
-	public ArrayList<Team> getPlayed() {
-		return played;
-	}
-
-	public void setPlayed(Team team) {
-		played.add(team);
-	}
-
-	public boolean mayorQue(Team data) {
+	/**
+	 * Compares two Team objects and returns true if the current Team object is
+	 * greater than the provided Team object. The comparison is based on the
+	 * following criteria: 
+	 * 1. Points 
+	 * 2. Goal difference (goals scored minus goals against) 
+	 * 3. Goals scored
+	 * 
+	 * @param data the Team object to compare with
+	 * @return true if the current Team object is greater than the provided Team
+	 *         object, false otherwise.
+	 */
+	public boolean greaterThan(Team data) {
 		if (points > data.points) {
 			return true;
 		} else if (points == data.points && (goalsScored - goalsAgainst) > (data.goalsScored - data.goalsAgainst)) {
@@ -138,6 +156,5 @@ public class Team {
 			return false;
 		}
 	}
-	
-	
+
 }

@@ -14,6 +14,13 @@ public class League {
 	List<List<Match>> round = new ArrayList<List<Match>>();
 	Random random = new Random();
 
+	/**
+	 * Simulates a tournament using a given HashMap of teams. The simulation
+	 * generates matches, assigns goals to teams, and updates team statistics such
+	 * as points and goals scored/conceded.
+	 * 
+	 * @param teamsMap HashMap containing teams participating in the tournament.
+	 */
 	public void simulate(HashMap teamsMap) {
 		List<Match> matches = new ArrayList<Match>();
 		// boolean to finish all rounds
@@ -44,22 +51,24 @@ public class League {
 					} while (!correct);
 				}
 
+				// create match between team1 and team2
 				Match match = new Match(team1, team2);
+				// add teams to each other's list of played teams
 				team1.setPlayed(team2);
 				team2.setPlayed(team1);
-
+				// remove teams from list of available teams
 				teams.remove(team1);
 				teams.remove(team2);
-				// generate goals
+				// generate random goals for each team
 				int team1Goals = random.nextInt(8);
 				int team2Goals = random.nextInt(8);
 				// set teams goals in the match
 				match.setHomeGoals(team1Goals);
 				match.setAwayGoals(team2Goals);
-				// add team goals
+				// add team1 goals to team1's statistics
 				team1.addGoalsScoredToTeam(team1Goals);
 				team2.addGoalsScoredToTeam(team2Goals);
-				// add goals against
+				// add team1 goals against to team1's statistics
 				team1.addGoalsAgainstToTeam(team2Goals);
 				team2.addGoalsAgainstToTeam(team1Goals);
 
@@ -71,23 +80,32 @@ public class League {
 					team1.addPoints(drawPoints);
 					team2.addPoints(drawPoints);
 				}
+				// add match to list of matches
 				matches.add(match);
 				i++;
 			} while (i != totalMatches);
-
+			// add round of matches to the tournament
 			round.add(matches);
+			// check if all rounds have been completed
 			if (round.size() >= totalRounds)
 				finish = true;
 		} while (!finish);
 
-		showSimulate();
+		displaySimulation();
 
 	}
 
+	/**
+	 * Generates a List of teams based on the teams present in the given HashMap.
+	 * 
+	 * @param teamsMap The HashMap containing teams to be added to the List.
+	 * @return A List of teams.
+	 */
 	public List<Team> generateTeams(HashMap teamsMap) {
 		List<Team> teamsArray = new ArrayList<Team>();
 		for (int i = 0; i < HashMap.TAMTABLA; i++) {
-			Team team = teamsMap.getTeamForPosition(i);
+			// get team at the current position
+			Team team = teamsMap.getTeamByPosition(i);
 			if (team == null)
 				continue;
 			teamsArray.add(team);
@@ -95,11 +113,20 @@ public class League {
 		return teamsArray;
 	}
 
-	public void showSimulate() {
+	/**
+	 * Displays the simulation by iterating through the rounds and matches and
+	 * printing the match details in the format:
+	 * 
+	 * homeTeamName homeGoals - awayGoals awayTeamName
+	 */
+	public void displaySimulation() {
 		int i = 1;
+		// iterate through the rounds
 		for (List<Match> matches : round) {
 			System.out.println("###### Jornadas " + i++ + " ######");
+			// iterate through the matches of the round
 			for (Match match : matches) {
+				// print the match details
 				System.out.println(match.getHomeTeam().getName() + " " + match.getHomeGoals() + " - "
 						+ match.getAwayGoals() + " " + match.getAwayTeam().getName());
 			}

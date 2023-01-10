@@ -20,13 +20,27 @@ public class HashMap {
 		numElementos = 0;
 		factorCarga = 0;
 	}
-	
-	public Team getTeamForPosition(int position) {
-		if (position < 0 || position > 27) return null;
+
+	/**
+	 * Returns the team object stored at a given position.
+	 * 
+	 * @param position the position of the team in the table
+	 * @return a Team object or null if the position is invalid or unoccupied
+	 */
+	public Team getTeamByPosition(int position) {
+		if (position < 0 || position > 27)
+			return null;
 		return tabla[position];
 	}
 
-	// devuelve la posición o índice de la tabla libre para insertar
+	/**
+	 * Returns the position in the table for a given key. If the key already exists
+	 * in the table, it returns the position of the key. If the key doesn't exist in
+	 * the table, it returns the next available position.
+	 * 
+	 * @param clave the key to be hashed
+	 * @return an integer representing the position in the table
+	 */
 	public int hash(String clave) {
 		int i = 0, p;
 		long d;
@@ -48,6 +62,12 @@ public class HashMap {
 		return p;
 	}
 
+	/**
+	 * Transforms a string key into an integer value.
+	 * 
+	 * @param clave the key to be transformed
+	 * @return a long integer representing the transformed key
+	 */
 	private long transformaCadena(String clave) {
 		// método de multiplicación para realizar la transformación.
 		// detalles de cómo se obtiene, queda fuera del ámbito del tema
@@ -61,6 +81,11 @@ public class HashMap {
 		return d;
 	}
 
+	/**
+	 * Inserts a team object into the table.
+	 * 
+	 * @param r the team object to be inserted
+	 */
 	public void insertar(Team r) {
 		int posicion = hash(r.getName());
 		tabla[posicion] = r;
@@ -71,34 +96,43 @@ public class HashMap {
 
 	}
 
-	//devuelve una referencia a un elemento di lo encuentra en la tabla y devuelve NULL si no lo encuentra o fue dado de baja
-	public Team buscar(String clave)
-	{
-		
-		int posicion=hash(clave);
-		Team pr=tabla[posicion];
-		
+	/**
+	 * Finds and returns the team object with a given name.
+	 * 
+	 * @param clave the name of the team to be searched
+	 * @return a Team object or null if the team was not found
+	 */
+	public Team buscar(String clave) {
+
+		int posicion = hash(clave);
+		Team pr = tabla[posicion];
+
 		return pr;
 	}
-	
-	public static void verPuntuaciones(HashMap param) {
+
+	/**
+	 * Prints the sorted list of teams and their scores
+	 * 
+	 * @param param the HashMap object from which the teams will be displayed
+	 */
+	public static void displayScores(HashMap param) {
 		param.tabla = SortAlgoritmes.shellSort(param.tabla);
 		System.out.println("EQUIPOS			PTS		DG");
 		int tab = 0;
 		for (int i = 0; param.tabla[i] != null; i++) {
-			tab = param.numElementos/5;
-			switch(tab) {
-			case 0: 
-				System.out.println(param.tabla[i]+ "			" + 20 + "		" + 3);
+			tab = param.numElementos / 5;
+			switch (tab) {
+			case 0:
+				System.out.println(param.tabla[i] + "			" + 20 + "		" + 3);
 				break;
 			case 1:
-				System.out.println(param.tabla[i]+ "			" + 20 + "		" + 3);
+				System.out.println(param.tabla[i] + "			" + 20 + "		" + 3);
 				break;
 			case 2:
-				System.out.println(param.tabla[i]+ "		" + 20 + "		" + 3);
+				System.out.println(param.tabla[i] + "		" + 20 + "		" + 3);
 				break;
 			case 3:
-				System.out.println(param.tabla[i]+ "	" + 20 + "		" + 3);
+				System.out.println(param.tabla[i] + "	" + 20 + "		" + 3);
 				break;
 			}
 		}

@@ -11,7 +11,7 @@ public class SortAlgoritmes {
 			for (int j = 0; j + k < data.length; j++) {
 				Team aux = null;
 				int i = j;
-				if (data[i].mayorQue(data[i + k])) {
+				if (data[i].greaterThan(data[i + k])) {
 					aux = data[i];
 					data[i] = data[i + k];
 					data[i + k] = aux;
@@ -25,7 +25,7 @@ public class SortAlgoritmes {
 
 	private static void backTracking(int gap, int i, Team[] data) {
 		Team aux = null;
-		while (i - gap >= 0 && data[i - gap].mayorQue(data[i])) {
+		while (i - gap >= 0 && data[i - gap].greaterThan(data[i])) {
 			aux = data[i];
 			data[i] = data[i - gap];
 			data[i - gap] = aux;
