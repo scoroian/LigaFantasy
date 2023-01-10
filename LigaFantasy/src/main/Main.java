@@ -23,33 +23,14 @@ public class Main {
 				break;
 			case 2:
 				League league = new League();
-//				addTeamsToTeam();
 				league.simulate(teams);
 				finish = true;
 				break;
-//			case 3:
-//				break;
-//			case 4:
-//				break;
-//			case 5:
-//				break;
-//			case 6:
-//				finish = true;
 			}
 		} while (!finish);
 	}
 
-//	public static int menu() {
-//		System.out.println("MENU LIGA FANTASY");
-//		System.out.println("1. Insertar equipo");
-//		System.out.println("2. Añadir puntos a equipo");
-//		System.out.println("3. Añadir goles a favor a equipo");
-//		System.out.println("4. Añadir goles en contra a equipo");
-//		System.out.println("5. Ver puntuacion");
-//		System.out.println("6. Salir");
-//		return scInt.nextInt();
-//	}
-
+	@SuppressWarnings("resource")
 	public static int menuSimulacion() {
 		try {
 			Scanner scInt = new Scanner(System.in);
@@ -65,13 +46,13 @@ public class Main {
 
 	}
 
+	@SuppressWarnings("resource")
 	public static void addTeam() {
 		// Control the maximum number of teams
 		if (totalTeams >= 21) {
 			System.err.println("Ya has llegado al maximo número de equipos");
 			return;
 		}
-//		try () {
 		Scanner scString = new Scanner(System.in);
 			Team team = new Team();
 			String name = null;
@@ -85,20 +66,7 @@ public class Main {
 
 			team.setName(name);
 			teams.insertar(team);
-//		}
 		totalTeams++;
-	}
-
-	public static void addTeamsToTeam() {
-		for (int i = 0; i < HashMap.TAMTABLA; i++) {
-			Team team = teams.getTeamForPosition(i);
-			if (team == null) continue;
-			for (int j = 0; j < HashMap.TAMTABLA; j++) {
-				Team teamToAdd = teams.getTeamForPosition(j);
-				if (i == j || teamToAdd == null) continue;
-				team.setPlayed(teamToAdd);
-			}
-		}
 	}
 	
 }

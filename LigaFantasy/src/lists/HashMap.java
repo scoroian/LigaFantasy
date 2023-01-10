@@ -77,20 +77,9 @@ public class HashMap {
 		
 		int posicion=hash(clave);
 		Team pr=tabla[posicion];
-//		if(pr!=null)
-//			if(!pr.esAlta) pr=null;
 		
 		return pr;
 	}
-//	
-//	//para dar de baja se siguen los mismos pasos que para buscar y se pone a false el atributo esAlta
-//	public void eliminar(String clave)
-//	{
-//		int posicion=hash(clave);
-//		if(tabla[posicion]!=null)
-//			tabla[posicion].esAlta=false;
-//		
-//	}
 	
 	public static void verPuntuaciones(HashMap param) {
 		param.tabla = SortAlgoritmes.shellSort(param.tabla);
