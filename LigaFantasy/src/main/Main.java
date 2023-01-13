@@ -26,23 +26,37 @@ public class Main {
 				league.simulate(teams);
 				finish = true;
 				break;
+			case 3:
+				Scanner sc = new Scanner(System.in);
+				System.out.println("0 para par, 1 para impar");
+				generarEqupiosAutomaticos(sc.nextInt());
+				break;
 			}
 		} while (!finish);
 	}
 
+	public static void generarEqupiosAutomaticos(int par) {
+		String alfabeto[] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
+				"S", "T", "U" };
+
+		for (int i = 0; i < (par == 0 ? alfabeto.length - 1 : alfabeto.length); i++) {
+			Team team = new Team();
+			String name = alfabeto[i];
+			team.setName(name);
+			teams.insertar(team);
+		}
+		
+	}
+
 	@SuppressWarnings("resource")
 	public static int menuSimulacion() {
-		try {
-			Scanner scInt = new Scanner(System.in);
-			System.out.println("MENU LIGA SIMULACION");
-			System.out.println("1. Insertar equipo");
-			System.out.println("2. Simular");
-			int option = scInt.nextInt();
-			return option;
-		} catch (Exception e) {
-			System.err.println("Opcion no valida");
-		}
-		return 0;
+		Scanner scInt = new Scanner(System.in);
+		System.out.println("MENU LIGA");
+		System.out.println("1. Insertar equipo");
+		System.out.println("2. Simular");
+		System.out.println("3. automatico");
+		int option = scInt.nextInt();
+		return option;
 
 	}
 
@@ -54,19 +68,19 @@ public class Main {
 			return;
 		}
 		Scanner scString = new Scanner(System.in);
-			Team team = new Team();
-			String name = null;
-			do {
-				if (name != null) {
-					System.err.println("El equipo ya existe");
-				}
-				System.out.println("Insertar nombre del equipo:");
-				name = scString.next();
-			} while (teams.buscar(name) != null);
+		Team team = new Team();
+		String name = null;
+		do {
+			if (name != null) {
+				System.err.print("El equipo ya existe");
+			}
+			System.out.println("Insertar nombre del equipo:");
+			name = scString.next();
+		} while (teams.buscar(name) != null);
 
-			team.setName(name);
-			teams.insertar(team);
+		team.setName(name);
+		teams.insertar(team);
 		totalTeams++;
 	}
-	
+
 }
