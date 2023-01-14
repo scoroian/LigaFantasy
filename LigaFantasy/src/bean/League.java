@@ -8,114 +8,115 @@ import lists.HashMap;
 
 public class League {
 
-	final static int winnerPoints = 3;
-	final static int drawPoints = 1;
-
-	List<List<Match>> round = new ArrayList<List<Match>>();
+	final static int WINNER_GOALS = 3;
+	final static int DRAW_POINTS = 1;
 	Random random = new Random();
 
-	/**
-	 * Simulates a tournament using a given HashMap of teams. The simulation
-	 * generates matches, assigns goals to teams, and updates team statistics such
-	 * as points and goals scored/conceded.
-	 * 
-	 * @param teamsMap HashMap containing teams participating in the tournament.
-	 */
-	public void simulate(HashMap teamsMap) {
-		List<Match> matches = new ArrayList<Match>();
-		List<Team> allTeams = generateTeams(teamsMap);
-		// boolean to finish all rounds
-		boolean finish = false;
-		do {
-			boolean reiniciar = false;
-			matches = new ArrayList<Match>();
-			// get teams array
-			List<Team> teams = generateTeams(teamsMap);
-			int totalRounds = teams.size() - 1;
-			int totalMatches = teams.size() / 2;
-			int i = 0;
-			do {
-				Team team1 = null;
-				Team team2 = null;
-				// check if teams is empty to finish loop
-				if (teams.size() == 0) {
-					break;
-				} else {
-					boolean correct = false;
-					int v = 0;
-					do {
-						int r = random.nextInt((teams.size()));
-						if (r == 0)
-							r++;
-						team1 = teams.get(0);
-						team2 = teams.get(r);
-						if (!team1.getPlayed().contains(team2))
-							correct = true;
-						v++;
-						if (v > teams.size()) {
-							reiniciar = true;
-							break;
-						}
-					} while (!correct);
-				}
-
-				if (!reiniciar) {
-					// create match between team1 and team2
-					Match match = new Match(team1, team2);
-					// add teams to each other's list of played teams
-					team1.setPlayed(team2);
-					team2.setPlayed(team1);
-					// remove teams from list of available teams
-					teams.remove(team1);
-					teams.remove(team2);
-					// generate random goals for each team
-					int team1Goals = random.nextInt(8);
-					int team2Goals = random.nextInt(8);
-					// set teams goals in the match
-					match.setHomeGoals(team1Goals);
-					match.setAwayGoals(team2Goals);
-					// add team1 goals to team1's statistics
-					team1.addGoalsScoredToTeam(team1Goals);
-					team2.addGoalsScoredToTeam(team2Goals);
-					// add team1 goals against to team1's statistics
-					team1.addGoalsAgainstToTeam(team2Goals);
-					team2.addGoalsAgainstToTeam(team1Goals);
-
-					if (team1Goals > team2Goals)
-						team1.addPoints(winnerPoints);
-					if (team2Goals > team1Goals)
-						team2.addPoints(winnerPoints);
-					if (team1Goals == team2Goals) {
-						team1.addPoints(drawPoints);
-						team2.addPoints(drawPoints);
-					}
-					// add match to list of matches
-					matches.add(match);
-					i++;
-				} else {
-					break;
-				}
-
-			} while (i != totalMatches);
-			if (reiniciar) {
-				for (Team team : allTeams) {
-					if (!teams.contains(team)) {
-						if (team.getPlayed().size() > 0)
-							team.getPlayed().remove(team.getPlayed().size() - 1);
-					}
-				}
-			} else {
-				// add round of matches to the tournament
-				round.add(matches);
-				// check if all rounds have been completed
-				if (round.size() >= totalRounds)
-					finish = true;
-			}
-		} while (!finish);
-
-		displaySimulation();
-
+	public Match[][] calcularLiga(HashMap teamsMap) {
+		List<Team> teams = generateTeams(teamsMap);
+		int numEquipos = teams.size();
+		if (numEquipos % 2 == 0)
+			return calcularLigaNumEquiposPar(teams);
+//		else
+//			return calcularLigaNumEquiposImpar(numEquipos);
+		return null;
 	}
+
+	/**
+	 * 
+	 * @param teams
+	 * @return
+	 */
+	private Match[][] calcularLigaNumEquiposPar(List<Team> teams) {
+		int numEquipos = teams.size();
+		int numRondas = numEquipos - 1;
+		int numPartidosPorRonda = numEquipos / 2;
+
+		Match[][] rounds = new Match[numRondas][numPartidosPorRonda];
+
+		for (int i = 0, k = 0; i < numRondas; i++) {
+			for (int j = 0; j < numPartidosPorRonda; j++) {
+				rounds[i][j] = new Match();
+
+				// generate random and set the home team
+				int randomGoals = random.nextInt(8);
+				rounds[i][j].setHomeGoals(randomGoals);
+				rounds[i][j].setHomeTeam(teams.get(k));
+				teams.get(k).addGoalsScoredToTeam(randomGoals);
+
+				k++;
+
+				if (k == numRondas)
+					k = 0;
+			}
+		}
+
+		for (int i = 0; i < numRondas; i++) {
+			if (i % 2 == 0) {
+				rounds[i][0].setAwayTeam(teams.get(numEquipos - 1));
+			} else {
+				rounds[i][0].setAwayTeam(rounds[i][0].getHomeTeam());
+				rounds[i][0].setHomeTeam(teams.get(numEquipos - 1));
+			}
+		}
+
+		int equipoMasAlto = numEquipos - 1;
+		int equipoImparMasAlto = equipoMasAlto - 1;
+
+		for (int i = 0, k = equipoImparMasAlto; i < numRondas; i++) {
+			for (int j = 1; j < numPartidosPorRonda; j++) {
+				// generate random and set the home team
+				int randomGoals = random.nextInt(8);
+				rounds[i][j].setAwayGoals(randomGoals);
+				rounds[i][j].setAwayTeam(teams.get(k));
+				teams.get(k).addGoalsScoredToTeam(randomGoals);
+
+				k--;
+
+				if (k == -1)
+					k = equipoImparMasAlto;
+			}
+		}
+
+		return rounds;
+	}
+
+//	private static Partido[][] calcularLigaNumEquiposImpar(int numEquipos) {
+//		int numRondas = numEquipos;
+//		int numPartidosPorRonda = numEquipos / 2;
+//
+//		Partido[][] rondas = new Partido[numRondas][numPartidosPorRonda];
+//
+//		for (int i = 0, k = 0; i < numRondas; i++) {
+//			for (int j = -1; j < numPartidosPorRonda; j++) {
+//				if (j >= 0) {
+//					rondas[i][j] = new Partido();
+//
+//					rondas[i][j].local = k;
+//				}
+//
+//				k++;
+//
+//				if (k == numRondas)
+//					k = 0;
+//			}
+//		}
+//
+//		int equipoMasAlto = numEquipos - 1;
+//
+//		for (int i = 0, k = equipoMasAlto; i < numRondas; i++) {
+//			for (int j = 0; j < numPartidosPorRonda; j++) {
+//				rondas[i][j].visitante = k;
+//
+//				k--;
+//
+//				if (k == -1)
+//					k = equipoMasAlto;
+//			}
+//		}
+//
+//		return rondas;
+//	}
 
 	/**
 	 * Generates a List of teams based on the teams present in the given HashMap.
@@ -135,23 +136,51 @@ public class League {
 		return teamsArray;
 	}
 
-	/**
-	 * Displays the simulation by iterating through the rounds and matches and
-	 * printing the match details in the format:
-	 * 
-	 * homeTeamName homeGoals - awayGoals awayTeamName
-	 */
-	public void displaySimulation() {
-		int i = 1;
-		// iterate through the rounds
-		for (List<Match> matches : round) {
-			System.out.println("###### Jornadas " + i++ + " ######");
-			// iterate through the matches of the round
-			for (Match match : matches) {
-				// print the match details
-				System.out.println(match.getHomeTeam().getName() + " " + match.getHomeGoals() + " - "
-						+ match.getAwayGoals() + " " + match.getAwayTeam().getName());
+	public void mostrarPartidos(Match[][] rounds) {
+		System.out.println("IDA");
+
+		for (int i = 0; i < rounds.length; i++) {
+			System.out.println("Ronda " + (i + 1) + ":\t");
+
+			for (int j = 0; j < rounds[i].length; j++) {
+				System.out.println((rounds[i][j].getHomeTeam().getName()) + " " + rounds[i][j].getHomeGoals() + " - "
+						+ rounds[i][j].getAwayGoals() + " " + (rounds[i][j].getAwayTeam().getName()) + "\t");
+
+				if (rounds[i][j].getHomeGoals() > rounds[i][j].getAwayGoals())
+					rounds[i][j].getHomeTeam().addPoints(WINNER_GOALS);
+				if (rounds[i][j].getAwayGoals() > rounds[i][j].getHomeGoals())
+					rounds[i][j].getAwayTeam().addPoints(WINNER_GOALS);
+				if (rounds[i][j].getHomeGoals() == rounds[i][j].getAwayGoals()) {
+					rounds[i][j].getHomeTeam().addPoints(DRAW_POINTS);
+					rounds[i][j].getAwayTeam().addPoints(DRAW_POINTS);
+				}
 			}
+
+			System.out.println();
 		}
+
+//		System.out.println("VUELTA");
+//
+//		for (int i = 0; i < rondas.length; i++) {
+//			System.out.print("Ronda " + (i + 1) + ": ");
+//
+//			for (int j = 0; j < rondas[i].length; j++) {
+//
+//				System.out.print("   " + (rondas[i][j].getAwayTeam().getName()) + " " + rondas[i][j].getAwayGoals()
+//						+ " - " + rondas[i][j].getHomeGoals() + " " + (rondas[i][j].getHomeTeam().getName()));
+//			}
+//
+//			System.out.println();
+//		}
+	}
+
+	public void displayPoints(List<Team> list) {
+		System.out.println(" ");
+		System.out.println("PUNTOS POR EQUIPOS:");
+		for (int i = 0; i < list.size(); i++) {
+			Team team = list.get(i);
+			System.out.println(team.getName() + ": " + team.getPoints() + " puntos.");
+		}
+
 	}
 }

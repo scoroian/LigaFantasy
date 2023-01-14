@@ -11,6 +11,9 @@ public class Match {
 	private int homeGoals;
 	private int awayGoals;
 
+	public Match() {
+	}
+
 	/**
 	 * @param homeTeam
 	 * @param awayTeam

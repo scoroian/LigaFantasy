@@ -23,7 +23,8 @@ public class Main {
 				break;
 			case 2:
 				League league = new League();
-				league.simulate(teams);
+				league.mostrarPartidos(league.calcularLiga(teams));
+				league.displayPoints(league.generateTeams(teams));
 				finish = true;
 				break;
 			case 3:
@@ -36,8 +37,10 @@ public class Main {
 	}
 
 	public static void generarEqupiosAutomaticos(int par) {
-		String alfabeto[] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
-				"S", "T", "U" };
+		String alfabeto[] = { "FC BARCELONA", "REAL MADRID", "REAL SOCIEDAD", "VILLAREAL", "REAL ZARAGOZA",
+				"REAL BETIS", "ATLETICO MADRID", "ATHLETIC CLUB", "RAYO VALLECANO", "OSASUNA CF", "MALLORCA CF",
+				"GIRONA FC", "VALENCIA CF", "GETAFE CF", "ALMERIA CF", "CELTA DE VIGO", "REAL VALLADOLID", "SEVILLA CF",
+				"CADIH CFOH", "ESPANYOL", "ELCHE" };
 
 		for (int i = 0; i < (par == 0 ? alfabeto.length - 1 : alfabeto.length); i++) {
 			Team team = new Team();
@@ -45,7 +48,7 @@ public class Main {
 			team.setName(name);
 			teams.insertar(team);
 		}
-		
+
 	}
 
 	@SuppressWarnings("resource")
@@ -75,7 +78,7 @@ public class Main {
 				System.err.print("El equipo ya existe");
 			}
 			System.out.println("Insertar nombre del equipo:");
-			name = scString.next();
+			name = scString.nextLine();
 		} while (teams.buscar(name) != null);
 
 		team.setName(name);
