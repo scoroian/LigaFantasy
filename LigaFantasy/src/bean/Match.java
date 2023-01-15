@@ -1,9 +1,5 @@
 package bean;
 
-/**
- * @author pablo
- *
- */
 public class Match {
 
 	private Team homeTeam;
@@ -11,10 +7,15 @@ public class Match {
 	private int homeGoals;
 	private int awayGoals;
 
+	/**
+	 * Constructor without params
+	 */
 	public Match() {
 	}
 
 	/**
+	 * Constructor with params
+	 * 
 	 * @param homeTeam
 	 * @param awayTeam
 	 */
@@ -79,12 +80,6 @@ public class Match {
 	 */
 	public void setAwayGoals(int awayGoals) {
 		this.awayGoals = awayGoals;
-	}
-
-	@Override
-	public String toString() {
-		return "Match [homeTeam=" + homeTeam + ", awayTeam=" + awayTeam + ", homeGoals=" + homeGoals + ", awayGoals="
-				+ awayGoals + "]";
 	}
 
 }

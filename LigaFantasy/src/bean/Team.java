@@ -1,14 +1,11 @@
 package bean;
 
-import java.util.ArrayList;
-
 public class Team {
 
 	private String name;
 	private int points;
 	private int goalsScored; // goles a favor
 	private int goalsAgainst; // goles en contra
-	private ArrayList<Team> played = new ArrayList<Team>();
 
 	/**
 	 * Empty constructor
@@ -85,20 +82,6 @@ public class Team {
 	}
 
 	/**
-	 * @return the played
-	 */
-	public ArrayList<Team> getPlayed() {
-		return played;
-	}
-
-	/**
-	 * @param team the played to set
-	 */
-	public void setPlayed(Team team) {
-		this.played.add(team);
-	}
-
-	/**
 	 * Adds the goals scored to the team.
 	 * 
 	 * @param numGoals number of goals scored
@@ -135,16 +118,18 @@ public class Team {
 	/**
 	 * Compares two Team objects and returns true if the current Team object is
 	 * greater than the provided Team object. The comparison is based on the
-	 * following criteria: 
-	 * 1. Points 
-	 * 2. Goal difference (goals scored minus goals against) 
-	 * 3. Goals scored
+	 * following criteria: 1. Points 2. Goal difference (goals scored minus goals
+	 * against) 3. Goals scored
 	 * 
 	 * @param data the Team object to compare with
 	 * @return true if the current Team object is greater than the provided Team
 	 *         object, false otherwise.
 	 */
 	public boolean greaterThan(Team data) {
+		if (data == null) {
+			return true;
+		}
+
 		if (points > data.points) {
 			return true;
 		} else if (points == data.points && (goalsScored - goalsAgainst) > (data.goalsScored - data.goalsAgainst)) {

@@ -5,16 +5,30 @@ import bean.Team;
 
 public class HashMap {
 	// 21 teams / 0.8 = 26.25, the next prime number is 27
-	public static final int TAMTABLA = 27;
+	public static final int LENGTH = 27;
 	private int numElementos;
 	private double factorCarga;
-	private Team[] tabla;
+	private Team[] arr;
+
+	/**
+	 * @return the arr
+	 */
+	public Team[] getArr() {
+		return arr;
+	}
+
+	/**
+	 * @param arr the arr to set
+	 */
+	public void setArr(Team[] arr) {
+		this.arr = arr;
+	}
 
 	public HashMap() {
 		// se inicializa la tabla y sus elementos a NULL
-		tabla = new Team[TAMTABLA];
-		for (int i = 0; i < TAMTABLA; i++) {
-			tabla[i] = null;
+		arr = new Team[LENGTH];
+		for (int i = 0; i < LENGTH; i++) {
+			arr[i] = null;
 		}
 		// se inicializan los atributos a 0
 		numElementos = 0;
@@ -30,7 +44,7 @@ public class HashMap {
 	public Team getTeamByPosition(int position) {
 		if (position < 0 || position > 27)
 			return null;
-		return tabla[position];
+		return arr[position];
 	}
 
 	/**
@@ -50,14 +64,14 @@ public class HashMap {
 
 		// aplica aritmetica modular para obtener la dirección base
 
-		p = (int) (d % TAMTABLA);
+		p = (int) (d % LENGTH);
 
 		// bucle de exploración cuadratica
 
-		while (tabla[p] != null && !tabla[p].getName().equals(clave)) {
+		while (arr[p] != null && !arr[p].getName().equals(clave)) {
 			i++;
 			p = p + i * i;
-			p = p % TAMTABLA;// considera el array como circular
+			p = p % LENGTH;// considera el array como circular
 		}
 		return p;
 	}
@@ -82,15 +96,16 @@ public class HashMap {
 	}
 
 	/**
+	 * 
 	 * Inserts a team object into the table.
 	 * 
 	 * @param r the team object to be inserted
 	 */
-	public void insertar(Team r) {
+	public void put(Team r) {
 		int posicion = hash(r.getName());
-		tabla[posicion] = r;
+		arr[posicion] = r;
 		numElementos++;
-		factorCarga = (double) (numElementos) / TAMTABLA;
+		factorCarga = (double) (numElementos) / LENGTH;
 		if (factorCarga > 0.8)
 			System.out.println("\n#### EL FACTOR DE CARGA SUPERA EL 80%, conviene aumentar el tamaño");
 
@@ -99,13 +114,13 @@ public class HashMap {
 	/**
 	 * Finds and returns the team object with a given name.
 	 * 
-	 * @param clave the name of the team to be searched
+	 * @param key the name of the team to be searched
 	 * @return a Team object or null if the team was not found
 	 */
-	public Team buscar(String clave) {
+	public Team getByKey(String key) {
 
-		int posicion = hash(clave);
-		Team pr = tabla[posicion];
+		int index = hash(key);
+		Team pr = arr[index];
 
 		return pr;
 	}
@@ -116,23 +131,23 @@ public class HashMap {
 	 * @param param the HashMap object from which the teams will be displayed
 	 */
 	public static void displayScores(HashMap param) {
-		param.tabla = SortAlgoritmes.shellSort(param.tabla);
+		param.arr = SortAlgoritmes.shellSort(param.arr);
 		System.out.println("EQUIPOS			PTS		DG");
 		int tab = 0;
-		for (int i = 0; param.tabla[i] != null; i++) {
+		for (int i = 0; param.arr[i] != null; i++) {
 			tab = param.numElementos / 5;
 			switch (tab) {
 			case 0:
-				System.out.println(param.tabla[i] + "			" + 20 + "		" + 3);
+				System.out.println(param.arr[i] + "			" + 20 + "		" + 3);
 				break;
 			case 1:
-				System.out.println(param.tabla[i] + "			" + 20 + "		" + 3);
+				System.out.println(param.arr[i] + "			" + 20 + "		" + 3);
 				break;
 			case 2:
-				System.out.println(param.tabla[i] + "		" + 20 + "		" + 3);
+				System.out.println(param.arr[i] + "		" + 20 + "		" + 3);
 				break;
 			case 3:
-				System.out.println(param.tabla[i] + "	" + 20 + "		" + 3);
+				System.out.println(param.arr[i] + "	" + 20 + "		" + 3);
 				break;
 			}
 		}
